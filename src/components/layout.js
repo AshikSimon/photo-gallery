@@ -2,6 +2,7 @@ import { createMedia } from "@artsy/fresnel";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Link } from "gatsby";
+import { Helmet } from "react-helmet"
 
 import {
   Container,
@@ -35,14 +36,10 @@ class DesktopContainer extends Component {
   render() {
     const { children } = this.props;
     const { fixed } = this.state;
-
+ 
     return (
       <Media greaterThan="mobile">
-        <Visibility
-          once={false}
-          onBottomPassed={this.showFixedMenu}
-          onBottomPassedReverse={this.hideFixedMenu}
-        >
+
        
             <Menu
               fixed={fixed ? "top" : null}
@@ -50,8 +47,9 @@ class DesktopContainer extends Component {
               pointing={!fixed}
               secondary={!fixed}
               size="large"
+              style={{padding: "1em"}}
             >
-              <Menu.Item as={Link} to="/" position="right">
+              <Menu.Item href="https://ashiksimon.com/" position="right">
                 <h1
                   style={{
                     fontFamily: "Poppins",
@@ -64,28 +62,9 @@ class DesktopContainer extends Component {
                 </h1>
               </Menu.Item>
               <Container>
-                <Menu.Item
-                  as={Link}
-                  to="/"
-                  activeClassName="active"
-                  className="nav-link nav-link-fade-up"
-                  position="right"
-                >
-                  About Me
-                </Menu.Item>
-
-                <Menu.Item
-                  as={Link}
-                  to="/gallery"
-                  activeClassName="active"
-                  className="nav-link nav-link-fade-up"
-                >
-                  Gallery
-                </Menu.Item>
+         
               </Container>
             </Menu>
-       
-        </Visibility>
 
         {children}
       </Media>
@@ -118,29 +97,11 @@ class MobileContainer extends Component {
             visible={sidebarOpened}
           >
             <Menu.Item
-              as={Link}
-              to="/"
+              href="https://ashiksimon.com/"
               activeClassName="active"
               position="right"
             >
               Home
-            </Menu.Item>
-
-            <Menu.Item
-              as={Link}
-              to="/"
-              activeClassName="active"
-              className="nav-link nav-link-fade-up"
-            >
-              About Me
-            </Menu.Item>
-            <Menu.Item
-              as={Link}
-              to="/gallery"
-              activeClassName="active"
-              className="nav-link nav-link-fade-up"
-            >
-              Gallery
             </Menu.Item>
           </Sidebar>
 
@@ -158,8 +119,7 @@ class MobileContainer extends Component {
                   </Menu.Item>
                   <Menu.Item position="right">
                     <h1
-                      as={Link}
-                      to="/"
+                      href="https://ashiksimon.com/"
                       style={{
                         fontFamily: "Poppins",
                         fontcolor: "#ffffff",
@@ -203,6 +163,7 @@ ResponsiveContainer.propTypes = {
 export default function Layout({ children }) {
   return (
     <div className="Site">
+      <Helmet title={"Photo Gallery"}/>
       <div className="Site-content" style={{color: "var(--font-color-base)"}}>
         <ResponsiveContainer style={{background: "#414141"}}>{children}</ResponsiveContainer>
       </div>

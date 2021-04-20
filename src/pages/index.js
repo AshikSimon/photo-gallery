@@ -1,39 +1,60 @@
-import "../styles/semantic.css"
-import React from 'react'
-import {
-  Grid,
-  Header,
-  Segment,
-} from 'semantic-ui-react'
-import Layout from "../components/layout"
-  
+import "../styles/semantic.css";
+import React , { useState, useEffect } from "react";
+import { Grid, Header, Segment } from "semantic-ui-react";
+import Layout from "../components/layout";
+import { photos } from "../images/gallery/gallery";
+import { SRLWrapper } from "simple-react-lightbox";
+import Gallery from "react-photo-gallery";
+import SimpleReactLightbox from "simple-react-lightbox";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-const HomepageLayout = () => (
+const imageRenderer = ({ left, top, key, photo }) => (
+  <div style={{margin: '6px 8px 6px 8px'}} className="centered" > 
+  <LazyLoadImage
+    width={photo.width}
+    height={photo.height}
+    key={key}
+    src={photo.src}
+    effect="blur"
+  />
+  </div>
+);
+
+
+export default function PhotoGallery() {
+    useEffect(() => {
+      photos.map(photo => {
+        photo.loading = "lazy";
+        return photo;
+      });
+    }, []);
+
+return(
   <Layout>
-    <Segment style={{ padding: "4em 0em", background: "var(--theme-background1)" }} vertical>
+    <Segment
+      style={{ padding: "4em 0em", background: "var(--theme-background1)" }}
+      vertical
+    >
       <Grid container stackable verticalAlign="middle">
         <Grid.Row>
-          <Grid.Column width={16} textAlign="center">
+          <Grid.Column width={16} textAlign="center" >
             <Header as="h3" style={{ fontSize: "2em" }}>
-              About Me
+              Gallery
             </Header>
-            <p style={{ fontSize: "1.33em" }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus
-              in mollis nunc sed id semper risus in hendrerit. Eu ultrices vitae
-              auctor eu augue ut lectus arcu. Fames ac turpis egestas sed. Neque
-              sodales ut etiam sit amet nisl purus. Nec feugiat nisl pretium
-              fusce id velit ut tortor pretium. Lacus sed viverra tellus in hac
-              habitasse platea dictumst vestibulum. Augue ut lectus arcu
-              bibendum at varius vel pharetra. Sed lectus vestibulum mattis
-              ullamcorper velit sed ullamcorper morbi tincidunt. Volutpat odio
-              facilisis mauris sit amet massa. Fusce ut placerat orci nulla. Nec
-              feugiat nisl pretium fusce.
-            </p>
+            <SimpleReactLightbox>
+              <SRLWrapper>
+                <Gallery 
+                renderImage={imageRenderer}
+                  photos={photos}
+                  margin={8}
+                />
+              </SRLWrapper>
+            </SimpleReactLightbox>
           </Grid.Column>
         </Grid.Row>
       </Grid>
     </Segment>
-    </Layout>
-)
-export default HomepageLayout
+  </Layout>
+);
+}

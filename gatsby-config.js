@@ -1,6 +1,8 @@
 module.exports = {
+  pathPrefix: "/photo-gallery",
   siteMetadata: {
-    title: "photo_portfolio",
+    title: `Photo Gallery`,
+    siteUrl: `https://ashiksimon.com/`,
   },
   plugins: [
     {
@@ -16,7 +18,14 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "src/images/icon.png",
+        name: `ashiksimon-portfolio`,
+        short_name: `portfolio`,
+        start_url: `/`,
+        background_color: `#c7d8ed`,
+        theme_color: `#c7d8ed`,
+        icon: "src/images/favicon.ico", 
+        crossOrigin: `use-credentials`,
+        icon: `src/images/android-chrome-512x512.png`, 
       },
     },
     "gatsby-plugin-mdx",
